@@ -17,7 +17,7 @@ Ak47::Ak47()
 	lastReload = 0;
 	lastShoot = 0;
 
-	bullet = Projectile("resource/sprites/bullet1.bmp", 200,20,10);
+	bullet = Projectile("resource/sprites/bullet1.bmp", 350,18,10);
 
 	sprite = al_load_bitmap("resource/weapons/ak47.bmp");
 	if(!sprite)

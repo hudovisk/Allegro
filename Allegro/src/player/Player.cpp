@@ -42,11 +42,11 @@ bool Player::collision(float x, float y)
 {
 	if(Game::getCurrentLevel()->getMap()->isSolidAt(x,y))
 		return true;
-	if(Game::getCurrentLevel()->getMap()->isSolidAt(x+width-1,y))
+	if(Game::getCurrentLevel()->getMap()->isSolidAt(x+width/2-1,y))
 		return true;
-	if(Game::getCurrentLevel()->getMap()->isSolidAt(x,y+height-1))
+	if(Game::getCurrentLevel()->getMap()->isSolidAt(x,y+height/2-1))
 		return true;
-	if(Game::getCurrentLevel()->getMap()->isSolidAt(x+width-1,y+height-1))
+	if(Game::getCurrentLevel()->getMap()->isSolidAt(x+width/2-1,y+height/2-1))
 		return true;
 	return false;
 }
@@ -95,10 +95,11 @@ void Player::update()
 		Projectile* p = new Projectile();
 		if(weapon->shoot(p))
 		{
-			int xx = pos.getX() + width/2 + 20*sin(angleDirection);
-			int yy = pos.getY() + height/2 +20*-cos(angleDirection);
+			int xx = pos.getX() + 20*sin(angleDirection);
+			int yy = pos.getY() + 20*-cos(angleDirection);
 			p->setOrigin(Point(xx,yy));
 			p->setAngle(angleDirection);
+			std::cout<<"Angle: "<<angleDirection<<std::endl;
 			Game::getCurrentLevel()->getProjectiles()->add(p);
 		}
 	}
@@ -108,8 +109,8 @@ void Player::update()
 
 void Player::render(int xOffs, int yOffs)
 {
-	al_draw_rotated_bitmap(currentSprite,width/2.0,height/2.0,pos.getX() + width/2 - xOffs,pos.getY() + height/2 - yOffs, angleDirection, 0);
-	al_draw_rotated_bitmap(weapon->getSprite(), width/2.0, height/2.0 + 20, pos.getX() + width/2 - xOffs,pos.getY() + height/2 - yOffs, angleDirection, 0);
+	al_draw_rotated_bitmap(currentSprite,width/2.0,height/2.0,pos.getX() - xOffs,pos.getY() - yOffs, angleDirection, 0);
+	al_draw_rotated_bitmap(weapon->getSprite(), weapon->getWidth()/2.0, weapon->getHeight()/2.0 + 20, pos.getX() - xOffs,pos.getY() - yOffs, angleDirection, 0);
 }
 
 void Player::setPos(float x, float y)
